@@ -3,5 +3,6 @@ RUN apt-get update && apt-get install nodejs -y && apt-get install nodejs-legacy
 RUN echo "Git Clone Repository"
 COPY . /tmp/
 RUN cd /tmp/node-js-sample/
-RUN npm install && npm start &
+RUN npm install
 EXPOSE 5000
+CMD [ "npm", "start" ]
