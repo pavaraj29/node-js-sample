@@ -5,5 +5,6 @@ COPY . /tmp/
 WORKDIR /tmp/node-js-sample/
 RUN echo pwd
 RUN npm install
+RUN npm start &
 EXPOSE 5000
-CMD [ "npm", "start" ]
+
