@@ -18,7 +18,6 @@ node {
         sh 'sudo docker push 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-new-v1'
 
     stage 'Kubernetes Deploy'
-        sh 'kubectl get pods'
         sh 'kubectl create -f /var/lib/jenkins/workspace/docker-build/node-js-sample/service.yml'
         sh 'kubectl create -f /var/lib/jenkins/workspace/docker-build/node-js-sample/deploy.yml'
         sh 'kubectl get pods'
