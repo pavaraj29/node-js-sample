@@ -5,7 +5,6 @@ node {
     stage 'Build'
         sh 'sudo rm -rf node-js-sample'
         sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
-        sh 'cd node-js-sample && pwd'
     
     stage 'Docker image build'
         sh 'sudo docker build -t nodejs-image-new .'
