@@ -8,7 +8,6 @@ node {
         sh 'cd node-js-sample && pwd'
     
     stage 'Docker image build'
-        sh 'cd /var/lib/jenkins/workspace/nodejs-pipeline/node-js-sample/'
         sh 'sudo docker build -t nodejs-image-new .'
         
     stage 'Docker image tag'
