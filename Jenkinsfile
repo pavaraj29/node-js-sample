@@ -1,14 +1,23 @@
-import hudson.model.ParameterValue;
-import hudson.model.ParametersAction;
-node {
-        /**
-         * Use currentBuild to:
-         * -Retrieve the build parameters
-         * -Display all the build parameters
-         */
-        def myBuildParams = currentBuild.rawBuild.getAction(ParametersAction.class)
-        for(ParameterValue p in myBuildParams) {
-            println p.name
-            println p.value
+pipeline {
+    agent any
+    parameters {
+        choice(
+            // choices are a string of newline separated values
+            // https://issues.jenkins-ci.org/browse/JENKINS-41180
+            choices: 'greeting\nsilence',
+            description: '',
+            name: 'REQUESTED_ACTION')
+    }
+
+    stages {
+        stage ('Speak') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { params.REQUESTED_ACTION == 'greeting' }
+            }
+            steps {
+                echo "Hello, bitwiseman!"
+            }
         }
+    }
 }
