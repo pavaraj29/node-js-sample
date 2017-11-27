@@ -1,13 +1,14 @@
-pipeline {
-    agent any
-    parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-    }
-    stages {
-        stage('Example') {
-            steps {
-                echo "Hello ${params.PERSON}"
-            }
+import hudson.model.ParameterValue;
+import hudson.model.ParametersAction;
+node {
+        /**
+         * Use currentBuild to:
+         * -Retrieve the build parameters
+         * -Display all the build parameters
+         */
+        def myBuildParams = currentBuild.rawBuild.getAction(ParametersAction.class)
+        for(ParameterValue p in myBuildParams) {
+            println p.name
+            println p.value
         }
-    }
 }
