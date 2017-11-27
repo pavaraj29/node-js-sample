@@ -3,7 +3,7 @@ node {
    git credentialsId: '9010883c-bf76-4a03-9fad-52550ce537b2', url: 'https://github.com/durgadeviramadoss/node-js-sample.git'
    
     stage 'Build'
-        sh 'sudo rm -rf node-js-sample'
+        sh '[ -d "node-js-sample" ] && sudo rm -rf node-js-sample'
         sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
     
     stage 'Docker image build'
