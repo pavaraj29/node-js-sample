@@ -25,9 +25,9 @@ pipeline {
             steps {
                 sh 'cd node-js-sample'
                 script{
-                    acc = readFile 'account.txt'
+                    acc = readFile "account.txt"
                 }
-                sh 'echo ${acc}'
+                sh 'echo $acc'
                 sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${acc}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
                 sh "sudo  docker tag nodejs-image-new ${acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
