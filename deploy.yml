@@ -3,7 +3,13 @@ kind: Deployment
 metadata:
   name: nodejs
 spec:
-  replicas: 2
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  minReadySeconds: 5
   template:
     metadata:
       labels:
