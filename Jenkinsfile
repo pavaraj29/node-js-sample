@@ -6,16 +6,15 @@ pipeline {
         string(defaultValue: 'v1', description: '', name: 'buildVersion')
     }
    
-   node {
-    withCredentials([
-      [$class: 'UsernamePasswordMultiBinding', credentialsId: aws_creds, usernameVariable: 'AWS_USER', passwordVariable: 'AWS_PASS'],
-    ]){
-    stage ('echo variables') {
-      sh """(
-        echo "User: ${AWS_USER}"
-        echo "Pass: ${AWS_PASS}"
-      )"""
-            }
+   stage('GetUserCredential') {
+        // Requires Credential setup (MyCredentialID)
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws_creds',
+                          usernameVariable: 'AWS_USER', passwordVariable: 'AWS_PASS']]) {
+
+            sh '''
+                set +x
+                echo "$AWS_PASS" > output.txt
+               '''
         }
     }
 
