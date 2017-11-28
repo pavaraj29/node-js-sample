@@ -9,6 +9,7 @@ pipeline {
         stage("buildtest") {
             steps {
                 echo "flag: ${params.userFlag}"
+                sh 'sudo rm -rf node-js-sample'
             }
         }
     }
