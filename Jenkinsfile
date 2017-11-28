@@ -1,11 +1,15 @@
-node {
-   echo 'Hello World1'
+pipeline {
+    agent any
 
-   parameters {
-        choice(name: 'DEPLOYMENT_TYPE', choices: 'rollingUpdate\nblueGreenDeployment', description: 'Deployment Type')
-   }
-   parameters {
-        string(name: 'BUILD_VERSION', defaultValue: 'v1', description: 'Version of the build')
-   }
-      
+    parameters {
+        booleanParam(defaultValue: true, description: '', name: 'userFlag')
+    }
+
+    stages {
+        stage("foo") {
+            steps {
+                echo "flag: ${params.userFlag}"
+            }
+        }
+    }
 }
