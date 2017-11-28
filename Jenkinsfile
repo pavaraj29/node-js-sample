@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                echo "flag: ${params.userFlag}"
+                echo "flag: ${params.buildVersion}"
                 sh 'sudo rm -rf node-js-sample'
                 sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
             }
