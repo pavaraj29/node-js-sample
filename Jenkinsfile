@@ -1,12 +1,13 @@
+def acc //undefined shared variable
 pipeline {
     agent any
 
     parameters {
         string(defaultValue: 'v1', description: '', name: 'buildVersion')
     }
-    define {
-       def acc //undefined shared variable
-     }
+   
+    
+    
     stages {
         stage("build") {
             steps {
