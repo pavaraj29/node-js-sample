@@ -5,7 +5,5 @@ pipeline {
         
         choice(choices: 'rollingUpdate\nblueGreenDeploy', description: 'Deployment methodology', name: 'Deployment')
     }
-    
-    echo ${params.BUILD_VERSION}
 
 }
