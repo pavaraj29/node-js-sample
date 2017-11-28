@@ -4,7 +4,9 @@ pipeline {
     parameters {
         string(defaultValue: 'v1', description: '', name: 'buildVersion')
     }
-
+    define {
+       def acc //undefined shared variable
+     }
     stages {
         stage("build") {
             steps {
@@ -20,14 +22,18 @@ pipeline {
         }
         stage("Docker image tag") {
             steps {
-                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids 958306274796) > file.txt'
+                script{
+                    acc = readFile 'node-js-sample/account'
+                }
+                sh 'echo ${acc}'
+                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${acc}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo  docker tag nodejs-image-new ${acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo docker push ${acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
     }
