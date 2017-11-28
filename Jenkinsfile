@@ -7,6 +7,5 @@ pipeline {
     }
     
     echo ${params.BUILD_VERSION}
-    echo ${params.Deployment}
 
 }
