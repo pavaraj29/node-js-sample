@@ -25,17 +25,17 @@ pipeline {
             steps {
                 sh 'cd node-js-sample'
                 script{
-                    acc = readFile "account.txt"
+                    env.acc = readFile "account.txt"
                 }
-                sh 'echo $acc'
-                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${acc}) > file.txt'
+                sh 'echo ${env.acc}'
+                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${env.acc}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new ${acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo  docker tag nodejs-image-new ${env.acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push ${acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo docker push ${env.acc}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
     }
