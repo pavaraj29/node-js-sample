@@ -5,18 +5,20 @@ pipeline {
     parameters {
         string(defaultValue: 'v1', description: '', name: 'buildVersion')
     }
-   withCredentials([
+   
+   node {
+    withCredentials([
       [$class: 'UsernamePasswordMultiBinding', credentialsId: aws_creds, usernameVariable: 'AWS_USER', passwordVariable: 'AWS_PASS'],
-  ]){
+    ]){
     stage ('echo variables') {
       sh """(
         echo "User: ${AWS_USER}"
         echo "Pass: ${AWS_PASS}"
       )"""
+            }
+        }
     }
-  }
-    
-    
+
     stages {
         stage("build") {
             steps {
