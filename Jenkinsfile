@@ -23,9 +23,7 @@ pipeline {
         }
         stage("Docker image tag") {
             steps {
-                script{
-                    acc = readFile 'node-js-sample/account'
-                }
+                sh 'echo pwd'
                 sh 'echo ${acc}'
                 sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${acc}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
