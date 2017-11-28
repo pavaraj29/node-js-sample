@@ -1,6 +1,4 @@
-pipeline {
-    agent any
-
+node {
     parameters {
         string(defaultValue: "v1", description: 'build version', name: 'BUILD_VERSION')
         
