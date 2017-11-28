@@ -1,11 +1,12 @@
 node {
    echo 'Hello World1'
 
-   parameters
+   parameters {
         choice(name: 'DEPLOYMENT_TYPE', choices: 'rollingUpdate\nblueGreenDeployment', description: 'Deployment Type')
-   parameters
+   }
+   parameters {
         string(name: 'BUILD_VERSION', defaultValue: 'v1', description: 'Version of the build')
-           
+   }
    stage 'Build'
         cleanWs()
         sh 'sudo rm -rf node-js-sample'
