@@ -27,7 +27,7 @@ pipeline {
         }
         stage("Docker image push") {
             steps {
-                sh 'sudo docker push 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-"${params.buildVersion}"'
+                sh "sudo docker push 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
     }
