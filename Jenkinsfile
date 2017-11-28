@@ -1,4 +1,4 @@
-node {
+pipeline {
     parameters {
         string(defaultValue: "v1", description: 'build version', name: 'BUILD_VERSION')
         
