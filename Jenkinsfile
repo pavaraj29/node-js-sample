@@ -25,7 +25,7 @@ pipeline {
             steps {
                 sh 'cd node-js-sample'
                 script{
-                    acc = readFile 'account'
+                    acc = $(cat account)
                 }
                 sh 'echo ${acc}'
                 sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${acc}) > file.txt'
