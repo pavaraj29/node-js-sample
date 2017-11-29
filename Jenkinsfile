@@ -13,6 +13,9 @@ pipeline {
     // when https://issues.jenkins-ci.org/browse/JENKINS-41748 is merged and
     // released.
     account = "958306274796"
+    service = "my-service"
+    DEPLOYMENTFILE = "deploy-green.yml"
+    VERSION= ${BUILD_ID}
      }
     
     stages {
@@ -32,12 +35,18 @@ pipeline {
             steps {
                 sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${account}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo  docker tag nodejs-image-new ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
             }
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-$${env.VERSION}"
+            }
+        }
+        stage("Blue-green Deployment") {
+            steps {
+                sh 'kubectl apply -f ${DEPLOYMENTFILE}'
+                sh 'kubectl patch svc $SERVICE -p "{\"spec\":{\"selector\": {\"app\": \"nodeapp\", \"version\": \"${VERSION}\"}}}"'
             }
         }
     }
