@@ -15,7 +15,7 @@ pipeline {
     account = "958306274796"
     service = "my-service"
     DEPLOYMENTFILE = "deploy-green.yml"
-    VERSION= ${BUILD_ID}
+    VERSION= "${BUILD_ID}"
      }
     
     stages {
