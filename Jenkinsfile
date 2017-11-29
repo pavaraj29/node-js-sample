@@ -54,7 +54,7 @@ pipeline {
                 expression { params.REQUESTED_ACTION == 'Rollingupdate' }
             }
             steps {
-                sh 'kubectl patch svc ${deployment} -p $"spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"'
+                sh 'kubectl patch deployment ${deployment} -p $"spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"'
             }
         }
         stage("Blue-green Deployment") {
