@@ -49,6 +49,25 @@ pipeline {
                 sh 'sudo docker push ${image}'
             }
         }
+        stage("Image scanning"){
+            steps{
+                sh '''
+                    [ -d "clair-config" ] && sudo rm -rf clair-config
+                    sudo mkdir clair-config
+                    sudo curl -L https://raw.githubusercontent.com/coreos/clair/master/config.yaml.sample -o $PWD/clair-config/config.yaml 
+                    IPADDRESS=`hostname -I | awk '{print $1}'`
+                    sudo sed -e "s/localhost/$IPADDRESS/g" -i $PWD/clair-config/config.yaml
+                    '''
+                sh '''
+                    sudo curl -LO https://github.com/optiopay/klar/releases/download/v1.5-RC2/klar-1.5-RC2-linux-amd64
+                    sudo chmod +x klar-1.5-RC2-linux-amd64
+                    sudo mv klar-1.5-RC2-linux-amd64 /usr/local/bin/klar 
+                    echo $(aws ecr get-login --region us-east-1 --registry-ids ${account}) > file.txt
+                    PASSWORD=$(sed "s/-e none//g" file.txt | cut -d' ' -f6)
+                    CLAIR_ADDR=localhost DOCKER_USER=AWS DOCKER_PASSWORD=${PASSWORD} klar ${image} || exit 0
+                    '''
+            }
+        }
          stage("Rollingupdate Deployment") {
              when {
                 // Only say hello if a "greeting" is requested
