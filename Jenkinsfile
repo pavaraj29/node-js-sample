@@ -55,7 +55,7 @@ pipeline {
             }
             steps {
                 sh 'echo Hello'
-                sh "kubectl patch deployment ${deployment} -p $'spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}'"
+                sh "kubectl patch deployment ${env.deployment} -p $'spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}'"
             }
         }
         stage("Blue-green Deployment") {
