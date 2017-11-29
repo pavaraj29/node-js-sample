@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(defaultValue: 'v2', description: '', name: 'buildVersion')
+       // string(defaultValue: 'v2', description: '', name: 'buildVersion')
         choice(
             choices: 'Rollingupdate\nBlue-Green',
             description: 'Deployment Type',
