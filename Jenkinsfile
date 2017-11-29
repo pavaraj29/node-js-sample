@@ -3,6 +3,10 @@ pipeline {
 
     parameters {
         string(defaultValue: 'v2', description: '', name: 'buildVersion')
+        choice(
+            choices: 'Rollingupdate\nBlue-Green',
+            description: 'Deployment Type',
+            name: 'REQUESTED_ACTION')
     }
     environment {
     // Environment variable identifiers need to be both valid bash variable
@@ -14,6 +18,7 @@ pipeline {
     // released.
     account = "958306274796"
     service = "my-service"
+    deployment = "nodejs"
     DEPLOYMENTFILE = "deploy-green.yml"
     VERSION= "${BUILD_ID}"
      }
@@ -43,7 +48,20 @@ pipeline {
                 sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
             }
         }
+         stage("Rollingupdate Deployment") {
+             when {
+                // Only say hello if a "greeting" is requested
+                expression { params.REQUESTED_ACTION == 'Rollingupdate' }
+            }
+            steps {
+                sh 'kubectl patch svc ${deployment} -p $"spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"'
+            }
+        }
         stage("Blue-green Deployment") {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { params.REQUESTED_ACTION == 'Blue-Green' }
+            }
             steps {
                 sh 'kubectl apply -f ${DEPLOYMENTFILE}'
                 sh 'kubectl patch svc ${service} -p $"spec:\n selector:\n  - app: nodeapp\n    version: "${VERSION}""'
