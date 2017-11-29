@@ -33,7 +33,7 @@ pipeline {
         }
         stage("Docker image tag") {
             steps {
-                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${account}) > file.txt'
+                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${env.account}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
                 sh "sudo  docker tag nodejs-image-new ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
             }
@@ -46,7 +46,7 @@ pipeline {
         stage("Blue-green Deployment") {
             steps {
                 sh 'kubectl apply -f ${DEPLOYMENTFILE}'
-                sh 'kubectl patch svc ${service} -p $"spec:\n selector:\n  - app: nodeapp\n     version: "${VERSION}""'
+                sh 'kubectl patch svc ${service} -p "spec:\n selector:\n  - app: nodeapp\n    version: "${VERSION}""'
             }
         }
     }
