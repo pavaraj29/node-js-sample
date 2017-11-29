@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(defaultValue: 'v1', description: '', name: 'buildVersion')
+        string(defaultValue: 'v2', description: '', name: 'buildVersion')
     }
     environment {
     // Environment variable identifiers need to be both valid bash variable
