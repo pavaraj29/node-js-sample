@@ -1,4 +1,4 @@
-def aws_creds = '4204626e-9b16-448b-9b2b-689e485be918'
+def account = '958306274796'
 pipeline {
     agent any
 
@@ -7,16 +7,6 @@ pipeline {
     }
     
     stages {
-        withCredentials([
-      [$class: 'UsernamePasswordMultiBinding', credentialsId: aws_creds, usernameVariable: 'AWS_USER', passwordVariable: 'AWS_PASS'],
-        ]){
-        stage ('echo variables') {
-        sh """(
-        echo "User: ${AWS_USER}"
-        echo "Pass: ${AWS_PASS}"
-         )"""
-        }
-        }
         stage("build") {
             steps {
                 echo "${params.buildVersion}"
@@ -31,14 +21,14 @@ pipeline {
         }
         stage("Docker image tag") {
             steps {
-                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids 958306274796) > file.txt'
+                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids $account) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo  docker tag nodejs-image-new $account.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push 958306274796.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo docker push $account.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
     }
