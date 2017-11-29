@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: nodeapp
+    version: 2
   type: LoadBalancer
   ports:
     - port: 5000
