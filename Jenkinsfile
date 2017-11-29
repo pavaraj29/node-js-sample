@@ -30,9 +30,9 @@ pipeline {
         }
         stage("Docker image tag") {
             steps {
-                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids $account) > file.txt'
+                sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${env.account}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new $account.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
+                sh "sudo  docker tag nodejs-image-new ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${params.buildVersion}"
             }
         }
         stage("Docker image push") {
