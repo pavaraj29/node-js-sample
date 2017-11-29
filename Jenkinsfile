@@ -21,6 +21,7 @@ pipeline {
     deployment = "nodejs"
     DEPLOYMENTFILE = "deploy-green.yml"
     VERSION= "${BUILD_ID}"
+    image = "${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
      }
     
     stages {
@@ -40,12 +41,12 @@ pipeline {
             steps {
                 sh 'echo $(aws ecr get-login --region us-east-1 --registry-ids ${account}) > file.txt'
                 sh 'sudo $( sed "s/-e none//g" file.txt)'
-                sh "sudo  docker tag nodejs-image-new ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
+                sh 'sudo  docker tag nodejs-image-new ${image}'
             }
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
+                sh 'sudo docker push ${image}'
             }
         }
          stage("Rollingupdate Deployment") {
@@ -55,7 +56,7 @@ pipeline {
             }
             steps {
                 sh 'echo Hello'
-                sh "kubectl patch deployment ${env.deployment} -p $'spec:\n   containers:\n   - name: front-end\n     image: ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}'"
+                sh 'kubectl patch deployment ${deployment} -p $"spec:\n   containers:\n   - name: front-end\n     image: ${image}"'
             }
         }
         stage("Blue-green Deployment") {
