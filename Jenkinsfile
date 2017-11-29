@@ -40,7 +40,7 @@ pipeline {
         }
         stage("Docker image push") {
             steps {
-                sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-$${env.VERSION}"
+                sh "sudo docker push ${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
             }
         }
         stage("Blue-green Deployment") {
