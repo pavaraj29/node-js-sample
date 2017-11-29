@@ -5,8 +5,9 @@ pipeline {
     parameters {
         string(defaultValue: 'v1', description: '', name: 'buildVersion')
     }
-   
-    stage('GetUserCredential') {
+    
+    stages {
+        stage('GetUserCredential') {
         // Requires Credential setup (MyCredentialID)
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws_creds',
                           usernameVariable: 'AWS_USER', passwordVariable: 'AWS_PASS']]) {
@@ -16,9 +17,7 @@ pipeline {
                 echo "$AWS_PASS" > output.txt
                '''
             }
-     }
-
-    stages {
+         }
         stage("build") {
             steps {
                 echo "${params.buildVersion}"
