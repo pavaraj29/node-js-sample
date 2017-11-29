@@ -46,7 +46,7 @@ pipeline {
         stage("Blue-green Deployment") {
             steps {
                 sh 'kubectl apply -f ${DEPLOYMENTFILE}'
-                sh 'kubectl patch svc $SERVICE -p "{\"spec\":{\"selector\": {\"app\": \"nodeapp\", \"version\": \"${VERSION}\"}}}"'
+                sh 'kubectl patch svc ${service} -p "{\"spec\":{\"selector\": {\"app\": \"nodeapp\", \"version\": \"${VERSION}\"}}}"'
             }
         }
     }
