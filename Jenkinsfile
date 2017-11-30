@@ -95,6 +95,5 @@ pipeline {
                 sh 'kubectl patch svc ${service} -p $"spec:\n selector:\n  - app: nodeapp\n    version: "${VERSION}""'
             }
         }
-    }
-  }  
+     }  
 }
