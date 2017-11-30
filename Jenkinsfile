@@ -21,7 +21,8 @@ pipeline {
     deployment = "nodejs"
     DEPLOYMENTFILE = "deploy-green.yml"
     VERSION= "${BUILD_ID}"
-    image = "${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
+    image = "${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"slackURL = ""
+    slackURL = "https://hooks.slack.com/services/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"
      }
     
     stages {
@@ -32,6 +33,12 @@ pipeline {
                 sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
             }
         }
+         stage("build") {
+            steps {
+                echo "${params.buildVersion}"
+                sh 'sudo rm -rf node-js-sample'
+                sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
+            }
         stage("Docker image build") {
             steps {
                 sh 'cd node-js-sample &&  sudo docker build -t nodejs-image-new .'
