@@ -25,19 +25,13 @@ pipeline {
      }
     
     stages {
-        stage("build") {
-            steps {
-                echo "${params.buildVersion}"
-                sh 'sudo rm -rf node-js-sample'
-                sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
-            }
-        }
          stage("build") {
             steps {
                 echo "${params.buildVersion}"
                 sh 'sudo rm -rf node-js-sample'
                 sh 'git clone https://github.com/durgadeviramadoss/node-js-sample.git'
             }
+        }
         stage("Docker image build") {
             steps {
                 sh 'cd node-js-sample &&  sudo docker build -t nodejs-image-new .'
@@ -96,4 +90,4 @@ pipeline {
         }
      }  
 }
-}
+
