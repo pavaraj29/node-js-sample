@@ -21,8 +21,7 @@ pipeline {
     deployment = "nodejs"
     DEPLOYMENTFILE = "deploy-green.yml"
     VERSION= "${BUILD_ID}"
-    image = "${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"slackURL = ""
-    slackURL = "https://hooks.slack.com/services/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"
+    image = "${env.account}.dkr.ecr.us-east-1.amazonaws.com/demo-jenkins-pipeline:nodejs-image-${env.VERSION}"
      }
     
     stages {
