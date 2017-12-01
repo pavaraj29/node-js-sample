@@ -76,7 +76,7 @@ pipeline {
         }
         stage("Build Notification") {
            steps {  
-                sh "curl -X POST -H 'Content-type: application/json' --data  \'payload=${payload}\' ${slackURL}"
+                sh "curl -X POST -H 'Content-type: application/json' --data-urlencode \'payload=${payload}\' ${slackURL}"
             }
         }
      }  
