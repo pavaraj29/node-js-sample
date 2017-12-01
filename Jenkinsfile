@@ -68,24 +68,9 @@ pipeline {
                     '''
             }
         }
-         stage("Rollingupdate Deployment") {
-             when {
-                // Only say hello if a "greeting" is requested
-                expression { params.REQUESTED_ACTION == 'Rollingupdate' }
-            }
-            steps {
-                sh 'echo Hello'
-                sh 'kubectl patch deployment ${deployment} -p $"spec:\n   containers:\n   - name: front-end\n     image: ${image}"'
-            }
-        }
-        stage("Blue-green Deployment") {
-            when {
-                // Only say hello if a "greeting" is requested
-                expression { params.REQUESTED_ACTION == 'Blue-Green' }
-            }
-            steps {
-                sh 'kubectl apply -f ${DEPLOYMENTFILE}'
-                sh 'kubectl patch svc ${service} -p $"spec:\n selector:\n  - app: nodeapp\n    version: "${VERSION}""'
+        stage("Build Notification") {
+           steps {  
+                sh 'curl -X POST -H "Content-type: application/json" --data "{"Build Information":"${env.JOB_NAME} [${env.BUILD_NUMBER}] success" }' https://hooks.slack.com/services/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
             }
         }
      }  
