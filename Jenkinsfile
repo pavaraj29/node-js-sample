@@ -77,6 +77,7 @@ pipeline {
         stage("Build Notification") {
            steps {  
                    sh 'echo $payload'
+                   slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                    //sh "curl -X POST -H 'Content-type: application/json' --data '{"text":"Success"}' https://hooks.slack.com/services/T87HA5CE6/B88KQ659V/gR22o9XK5PioXyDhy035Q7"
             }
         }
