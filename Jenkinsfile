@@ -78,6 +78,7 @@ pipeline {
            steps {  
                    sh "curl -X POST -H 'Content-type: application/json' --data '{"text":"Success"}' https://hooks.slack.com/services/T87HA5CE6/B88KQ659V/gR22o9XK5PioXyDhy035Q7"
             }
+        }
      }  
 }
 
