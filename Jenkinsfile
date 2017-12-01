@@ -70,7 +70,7 @@ pipeline {
         }
         stage("Build Notification") {
            steps {  
-                sh 'curl -X POST -H "Content-type: application/json" --data "{"Build Information":"${env.JOB_NAME} [${env.BUILD_NUMBER}] success}" https://hooks.slack.com/services/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'
+                sh "curl -X POST -H 'Content-type: application/json' --data '{'Build Information': '${env.JOB_NAME} ${env.BUILD_ID} success}' https://hooks.slack.com/services/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"
             }
         }
      }  
