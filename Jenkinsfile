@@ -1,9 +1,3 @@
-import groovy.json.JsonOutput
-def payload = JsonOutput.toJson([jobname: "${env.JOB_NAME}",
-        buildno: "${BUILD_ID}",
-        stauts: "Success"
-    ])
-def slackURL = 'https://hooks.slack.com/services/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'
 pipeline {
     agent any
 
@@ -72,13 +66,6 @@ pipeline {
                     PASSWORD=$(sed "s/-e none//g" file.txt | cut -d' ' -f6)
                     CLAIR_ADDR=localhost DOCKER_USER=AWS DOCKER_PASSWORD=${PASSWORD} klar ${image} || exit 0
                     '''
-            }
-        }
-        stage("Build Notification") {
-           steps {  
-                   sh 'echo $payload'
-                   slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-                   //sh "curl -X POST -H 'Content-type: application/json' --data '{"text":"Success"}' https://hooks.slack.com/services/T87HA5CE6/B88KQ659V/gR22o9XK5PioXyDhy035Q7"
             }
         }
      }  
