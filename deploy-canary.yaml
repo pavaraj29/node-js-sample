@@ -13,5 +13,6 @@ spec:
       containers:
         - name: front-end
           image: pavanraj29/nodejs-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
