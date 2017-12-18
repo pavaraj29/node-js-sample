@@ -77,8 +77,8 @@ pipeline {
                         sleep 60
                         SERVICE_IP=`kubectl get svc my-service -o jsonpath="{.status.loadBalancer.ingress[0].*}"`
                         for i in `seq 1 10`; do curl http://$SERVICE_IP/>>tmpfile; sleep 1;  done
-                        if grep -q "Hello World-v2" "tmpfile"; then 
-                        kubectl set image deployment/nodejs front-end=pavanraj29/nodejs-app:v2
+                        if grep -q "Hello World-v3" "tmpfile"; then 
+                        kubectl set image deployment/nodejs front-end=${image}:latest
                         fi
                         rm tmpfile
                 '''
