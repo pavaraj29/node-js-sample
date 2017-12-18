@@ -81,7 +81,7 @@ pipeline {
                         if grep -q "Hello World-v4" "tmpfile"; then 
                         kubectl set image deployment/nodejs front-end=${image}:latest
                         fi
-                        rm tmpfile
+                        #rm tmpfile
                 '''
             }
         }
