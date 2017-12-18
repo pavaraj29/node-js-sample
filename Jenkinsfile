@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo "${params.buildVersion}"
                 sh 'sudo rm -rf node-js-sample'
-                sh 'git clone https://github.com/pavanraj29/node-js-sample.git'
+                sh 'git clone https://github.com/pavaraj29/node-js-sample.git'
             }
         }
         stage("Docker image build") {
