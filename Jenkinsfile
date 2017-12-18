@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sh '''sudo docker login -u pavanraj29 -p Pavan@123
                 //sh 'sudo docker push ${image}'
-                sudo docker push ${image}:${VERSION}'
+                sudo docker push ${image}:${VERSION}
                 sed -i -e 's/"nodejs-app:latest"/"nodejs-app:${VERSION}"/g' deploy-canary.yaml
                 '''
             }
