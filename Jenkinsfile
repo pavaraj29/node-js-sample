@@ -73,6 +73,7 @@ pipeline {
             }
             steps {
                 sh '''
+                        kubectl delete -f deploy-canary.yaml
                         kubectl apply -f deploy-canary.yaml
                         sleep 60
                         SERVICE_IP=`kubectl get svc my-service -o jsonpath="{.status.loadBalancer.ingress[0].*}"`
