@@ -41,7 +41,7 @@ pipeline {
         }
         stage("Docker image push") {
             steps {
-                sh 'docker login -u pavanraj29 -p Pavan@123'
+                sh 'sudo docker login -u pavanraj29 -p Pavan@123'
                 sh 'sudo docker push ${image}'
                 sh 'sudo docker push ${image}:${env.VERSION}'
             }
