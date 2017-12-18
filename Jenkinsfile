@@ -36,14 +36,15 @@ pipeline {
         stage("Docker image tag") {
             steps {
                 sh 'sudo  docker tag nodejs-image-new ${image}:${VERSION}'
-                sh 'sudo  docker tag nodejs-image-new ${image}'
+                //sh 'sudo  docker tag nodejs-image-new ${image}'
             }
         }
         stage("Docker image push") {
             steps {
                 sh 'sudo docker login -u pavanraj29 -p Pavan@123'
-                sh 'sudo docker push ${image}'
+                //sh 'sudo docker push ${image}'
                 sh 'sudo docker push ${image}:${VERSION}'
+                sh "sed -i -e 's/"nodejs-app:latest"/"nodejs-app:${VERSION}"/g' deploy-canary.yaml"
             }
         }
         stage("Rollingupdate Deployment") {
@@ -73,7 +74,7 @@ pipeline {
             }
             steps {
                 sh '''
-                        kubectl delete -f deploy-canary.yaml
+                        //kubectl delete -f deploy-canary.yaml
                         kubectl apply -f deploy-canary.yaml
                         sleep 60
                         SERVICE_IP=`kubectl get svc my-service -o jsonpath="{.status.loadBalancer.ingress[0].*}"`
