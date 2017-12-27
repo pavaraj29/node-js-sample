@@ -4,5 +4,5 @@
         serverDomain = "Sample Project Server Domain"
         dockerImageName = "nodejs-image-new"
         image = "pavanraj29/nodejs-app"
-        imageVersion = $ENV.BUILD_NUMBER
+        imageVersion = $ENV.BUILD_ID
         }
