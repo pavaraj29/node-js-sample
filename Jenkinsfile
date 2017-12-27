@@ -7,5 +7,7 @@
         environment {
             imageVersion = "${env.BUILD_ID}"
         }
+        node {
         sh "echo ${imageVersion}"
+        }
         }
