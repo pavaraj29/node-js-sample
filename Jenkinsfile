@@ -5,8 +5,7 @@ def imageVersion = "${BUILD_ID}"
         serverDomain = "Sample Project Server Domain"
         dockerImageName = "nodejs-image-new"
         image = "pavanraj29/nodejs-app"
-        export imageVersion = "${imageVersion}"
         node {
-        sh "echo ${imageVersion}"
+        sh "export imageVersion = '${imageVersion}'"
         }
         }
