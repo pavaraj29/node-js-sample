@@ -1,4 +1,4 @@
-def imageVersion = ${BUILD_ID}
+def imageVersion = "${BUILD_ID}"
 @Library("jenkins-docker-sharedlibrary") _
     dockersharedlib {
         projectName = "Sample Project"
