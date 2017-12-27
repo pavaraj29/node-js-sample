@@ -5,7 +5,7 @@
         dockerImageName = "nodejs-image-new"
         image = "pavanraj29/nodejs-app"
         environment {
-            imageVersion = "${env.BUILD_ID}"
+            imageVersion = env.BUILD_ID
         }
         node {
         sh "echo ${imageVersion}"
