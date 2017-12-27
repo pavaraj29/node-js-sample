@@ -1,4 +1,7 @@
-def imageVersion = "${BUILD_ID}"
+//def imageVersion = "${BUILD_ID}"
+environment{
+    imageVersion = currentBuild.getNumber()
+}
 @Library("jenkins-docker-sharedlibrary") _
     dockersharedlib {
         projectName = "Sample Project"
