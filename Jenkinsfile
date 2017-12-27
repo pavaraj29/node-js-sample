@@ -1,8 +1,10 @@
 @Library("jenkins-docker-sharedlibrary") _
-    dockersharedlib (
-        projectName: "Sample Project",
-        serverDomain: "Sample Project Server Domain",
-        dockerImageName: "nodejs-image-new",
-        image: "pavanraj29/nodejs-app",
-        imageVersion: ENV['BUILD_ID']
-        )
+    dockersharedlib {
+        projectName = "Sample Project"
+        serverDomain = "Sample Project Server Domain"
+        dockerImageName = "nodejs-image-new"
+        image = "pavanraj29/nodejs-app"
+        environment {
+            imageVersion = "${env.BUILD_ID}"
+        }
+        }
