@@ -6,6 +6,6 @@ def imageVersion = "${BUILD_ID}"
         dockerImageName = "nodejs-image-new"
         image = "pavanraj29/nodejs-app"
         node {
-        sh "export imageVersion = '${imageVersion}'"
+        sh "export imageVersion='${imageVersion}'"
         }
         }
