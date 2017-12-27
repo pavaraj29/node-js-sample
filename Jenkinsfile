@@ -1,5 +1,5 @@
 @Library("jenkins-docker-sharedlibrary") _
-    def buildNo = params.BUILD_NUMBER
+    def buildNo = ${BUILD_NUMBER}
     dockersharedlib {
         projectName = "Sample Project"
         serverDomain = "Sample Project Server Domain"
