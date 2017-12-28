@@ -1,2 +1,2 @@
 env.test = "test"
-env.imageVersion = "${BUILD_NUMBER}"
+env.imageVersion1 = "${BUILD_NUMBER}"
