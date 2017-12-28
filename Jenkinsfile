@@ -14,3 +14,4 @@ parameters {
         node {
             sh "echo params.REQUESTED_ACTION"
         }
+      }
