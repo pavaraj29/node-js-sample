@@ -11,6 +11,7 @@ parameters {
         serverDomain = "Sample Project Server Domain"
         dockerImageName = "nodejs-image-new"
         image = "pavanraj29/nodejs-app"
+        deploymentType = "Rollingupdate"   
         node {
             sh "echo params.REQUESTED_ACTION"
         }
